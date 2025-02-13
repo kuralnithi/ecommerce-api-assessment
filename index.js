@@ -1,11 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const sequelize = require('./config/database');
-const authRoutes = require('./routes/authRoutes');
-const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-const cartRoutes = require('./routes/cartRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
+const sequelize = require('./src/config/database.js');
+const authRoutes = require('./src/routes/authRoutes.js');
+const productRoutes = require('./src/routes/productRoutes.js');
+const orderRoutes = require('./src/routes/orderRoutes.js');
+const cartRoutes = require('./src/routes/cartRoutes.js');
+const paymentRoutes = require('./src/routes/paymentRoutes.js');
 
 dotenv.config();
 

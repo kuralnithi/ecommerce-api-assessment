@@ -1,0 +1,31 @@
+# E-Commerce API Endpoints
+
+## Authentication
+- **POST** `/api/auth/register` - Register a new user
+- **POST** `/api/auth/login` - User login
+
+## Products
+- **GET** `/api/products` - Get all products
+- **GET** `/api/products/:id` - Get product by ID
+- **POST** `/api/products` - Create a new product (Vendor only)
+- **PUT** `/api/products/:id` - Update product details (Vendor only)
+- **DELETE** `/api/products/:id` - Delete product (Vendor only)
+
+## Orders
+- **GET** `/api/orders` - Get all orders (Admin only)
+- **GET** `/api/orders/:id` - Get order by ID
+- **POST** `/api/orders` - Create a new order
+- **PUT** `/api/orders/:id` - Update order status (Admin only)
+
+## Cart
+- **GET** `/api/cart/:userId` - Get cart items for a user
+- **POST** `/api/cart` - Add item to cart
+- **PUT** `/api/cart/:id` - Update cart item quantity
+- **DELETE** `/api/cart/:id` - Remove item from cart
+
+## Payments
+- **POST** `/api/payments` - Process a payment
+- **GET** `/api/payments/:orderId` - Get payment details by order ID
+
+## Staff Management (Admin only)
+- **POST** `/api/staff/create` - Create a new staff member
