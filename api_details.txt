@@ -1,31 +1,91 @@
 # E-Commerce API Endpoints
 
 ## Authentication
-- **POST** `/api/auth/register` - Register a new user
-- **POST** `/api/auth/login` - User login
+- **POST** `/api/auth/register`  
+  - **Body:** `{ "username": "string", "password": "string" }`  
+  - **Response:** `{ "message": "User registered successfully", "token": "JWT_TOKEN" }`
+
+- **POST** `/api/auth/login`  
+  - **Body:** `{ "username": "string", "password": "string" }`  
+  - **Response:** `{ "message": "Login successful", "token": "JWT_TOKEN" }`
 
 ## Products
-- **GET** `/api/products` - Get all products
-- **GET** `/api/products/:id` - Get product by ID
-- **POST** `/api/products` - Create a new product (Vendor only)
-- **PUT** `/api/products/:id` - Update product details (Vendor only)
-- **DELETE** `/api/products/:id` - Delete product (Vendor only)
+- **GET** `/api/products`  
+  - **Response:** `[{ "id": "UUID", "name": "string", "category": "string", "price": "decimal", "stock_quantity": "integer" }]`
+
+- **GET** `/api/products/:id`  
+  - **Params:** `id: UUID`  
+  - **Response:** `{ "id": "UUID", "name": "string", "category": "string", "price": "decimal", "stock_quantity": "integer" }`
+
+- **POST** `/api/products` (Vendor only)  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Body:** `{ "name": "string", "category": "string", "price": "decimal", "stock_quantity": "integer" }`  
+  - **Response:** `{ "message": "Product created successfully", "product": { ... } }`
+
+- **PUT** `/api/products/:id` (Vendor only)  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Params:** `id: UUID`  
+  - **Body:** `{ "name": "string", "category": "string", "price": "decimal", "stock_quantity": "integer" }`  
+  - **Response:** `{ "message": "Product updated successfully" }`
+
+- **DELETE** `/api/products/:id` (Vendor only)  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Params:** `id: UUID`  
+  - **Response:** `{ "message": "Product deleted successfully" }`
 
 ## Orders
-- **GET** `/api/orders` - Get all orders (Admin only)
-- **GET** `/api/orders/:id` - Get order by ID
-- **POST** `/api/orders` - Create a new order
-- **PUT** `/api/orders/:id` - Update order status (Admin only)
+- **GET** `/api/orders` (Admin only)  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Response:** `[{ "id": "UUID", "user_id": "UUID", "status": "string" }]`
+
+- **GET** `/api/orders/:id`  
+  - **Params:** `id: UUID`  
+  - **Response:** `{ "id": "UUID", "user_id": "UUID", "status": "string" }`
+
+- **POST** `/api/orders`  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Body:** `{ "user_id": "UUID", "products": [{ "product_id": "UUID", "quantity": "integer" }] }`  
+  - **Response:** `{ "message": "Order created successfully", "order": { ... } }`
+
+- **PUT** `/api/orders/:id` (Admin only)  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Params:** `id: UUID`  
+  - **Body:** `{ "status": "string" }`  
+  - **Response:** `{ "message": "Order status updated" }`
 
 ## Cart
-- **GET** `/api/cart/:userId` - Get cart items for a user
-- **POST** `/api/cart` - Add item to cart
-- **PUT** `/api/cart/:id` - Update cart item quantity
-- **DELETE** `/api/cart/:id` - Remove item from cart
+- **GET** `/api/cart/:userId`  
+  - **Params:** `userId: UUID`  
+  - **Response:** `[{ "id": "UUID", "user_id": "UUID", "product_id": "UUID", "quantity": "integer" }]`
+
+- **POST** `/api/cart`  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Body:** `{ "user_id": "UUID", "product_id": "UUID", "quantity": "integer" }`  
+  - **Response:** `{ "message": "Item added to cart" }`
+
+- **PUT** `/api/cart/:id`  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Params:** `id: UUID`  
+  - **Body:** `{ "quantity": "integer" }`  
+  - **Response:** `{ "message": "Cart item updated" }`
+
+- **DELETE** `/api/cart/:id`  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Params:** `id: UUID`  
+  - **Response:** `{ "message": "Cart item removed" }`
 
 ## Payments
-- **POST** `/api/payments` - Process a payment
-- **GET** `/api/payments/:orderId` - Get payment details by order ID
+- **POST** `/api/payments`  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Body:** `{ "order_id": "UUID", "amount": "decimal", "payment_method": "string" }`  
+  - **Response:** `{ "message": "Payment processed successfully" }`
+
+- **GET** `/api/payments/:orderId`  
+  - **Params:** `orderId: UUID`  
+  - **Response:** `{ "order_id": "UUID", "status": "string", "amount": "decimal" }`
 
 ## Staff Management (Admin only)
-- **POST** `/api/staff/create` - Create a new staff member
+- **POST** `/api/staff/create`  
+  - **Headers:** `{ "Authorization": "Bearer JWT_TOKEN" }`  
+  - **Body:** `{ "username": "string", "password": "string" }`  
+  - **Response:** `{ "message": "Staff created successfully", "staff": { ... } }`
